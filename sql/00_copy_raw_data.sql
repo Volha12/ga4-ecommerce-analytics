@@ -6,7 +6,6 @@ CREATE SCHEMA IF NOT EXISTS `YOUR_PROJECT_ID.ga4_raw`
 OPTIONS (location = 'US');
 
 CREATE TABLE `ga4-ecommerce-analysis-511509.ga4_raw.events`
-PARTITION BY event_date_dt
 CLUSTER BY event_name
 AS
 SELECT
