@@ -9,7 +9,8 @@ acquisition channels bring the most valuable customers?
 ## Data
 Google Merchandise Store sample dataset
 (`bigquery-public-data.ga4_obfuscated_sample_ecommerce`),
-events from 2020-11-01 to 2021-01-31.
+GA4 events from November 2020 to January 2021
+(about 80-100K users and 110-130K sessions per month).
 
 ## Key findings
 (заполнишь в конце: 4-5 пунктов с цифрами)
