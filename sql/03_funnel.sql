@@ -1,11 +1,10 @@
 WITH session_events AS (
-  -- one row per session and event type
   SELECT
     CONCAT(user_pseudo_id, '-',
       CAST((SELECT value.int_value FROM UNNEST(event_params)
             WHERE key = 'ga_session_id') AS STRING)) AS session_id,
     event_name
-  FROM `ga4-ecommerce-analysis-511509.ga4_raw.events`
+  FROM `YOUR_PROJECT_ID.ga4_raw.events`
   WHERE event_name IN ('session_start', 'view_item', 'add_to_cart',
                        'begin_checkout', 'add_shipping_info',
                        'add_payment_info', 'purchase')
@@ -13,7 +12,6 @@ WITH session_events AS (
 ),
 
 sessions AS (
-  -- one row per session with a flag for each funnel step
   SELECT
     session_id,
     MAX(IF(event_name = 'session_start', 1, 0))     AS session_start,
@@ -29,7 +27,6 @@ sessions AS (
 ),
 
 counts AS (
-  -- strict funnel: a session counts at a step only if it passed all previous steps
   SELECT
     COUNTIF(session_start = 1) AS s1,
     COUNTIF(session_start = 1 AND view_item = 1) AS s2,
@@ -63,4 +60,4 @@ UNNEST([
   STRUCT(6, 'add_payment_info',  s6),
   STRUCT(7, 'purchase',          s7)
 ])
-ORDER BY step_n
+ORDER BY step_n;
