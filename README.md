@@ -1,25 +1,41 @@
-# ga4-ecommerce-analytics
-E-commerce funnel, retention and marketing channel analysis on GA4 data (BigQuery SQL, dbt, Looker Studio, Tableau)
 # E-commerce Funnel Analysis (GA4, BigQuery)
 
+End-to-end analysis of a GA4 e-commerce dataset: purchase funnel, marketing channel performance, cohort retention, dashboards and an A/B test.
+
 ## Business question
-Where do users drop off in the purchase funnel, and which
-acquisition channels bring the most valuable customers?
+Where do users drop off in the purchase funnel, and which acquisition channels bring the most valuable customers?
 
 ## Data
-Google Merchandise Store sample dataset
-(`bigquery-public-data.ga4_obfuscated_sample_ecommerce`),
-GA4 events from November 2020 to January 2021
-(about 80-100K users and 110-130K sessions per month).
+Google Merchandise Store sample dataset (`bigquery-public-data.ga4_obfuscated_sample_ecommerce`), GA4 events from November 2020 to January 2021 (about 80-100K users and 110-130K sessions per month).
 
 ## Key findings
-(заполнишь в конце: 4-5 пунктов с цифрами)
+1. **The biggest loss is at the top of the funnel.** Only about 22% of sessions reach a product page, and only about 20% of those add an item to the cart. Overall, 1.4% of sessions end in a purchase (4,848 of 354,857).
+2. **Referral traffic is the most valuable identifiable channel.** It converts at 1.66% (vs 1.10% for organic) and brings $1.31 revenue per session. Organic is the largest source of revenue (about 29%), but converts below average. Paid search (cpc) has the lowest average order value ($59 vs $74-79 for other channels) on a small traffic base (4% of sessions).
+3. **Strict and non-strict funnels differ a lot.** 47% of sessions with `begin_checkout` have no `add_to_cart` in the same session, so a strict funnel understates conversion (2,816 purchasing sessions vs 4,848).
+
+## Funnel (non-strict, each step counted independently)
+| Step | Sessions | % of sessions |
+|---|---|---|
+| session_start | 354,857 | 100% |
+| view_item | 77,020 | 21.7% |
+| add_to_cart | 15,188 | 4.3% |
+| begin_checkout | 11,106 | 3.1% |
+| purchase | 4,848 | 1.4% |
 
 ## Approach
-1. Funnel: session_start → view_item → add_to_cart → begin_checkout → purchase
-2. Cohort retention by first-visit week
+1. Copy the public dataset into my own BigQuery project
+2. Funnel analysis (strict and non-strict versions)
 3. Channel performance: sessions, conversion rate, revenue
-4. A/B test analysis (separate dataset)
+4. Cohort retention by first-visit week (in progress)
+5. Dashboards in Looker Studio and Tableau Public
+6. A/B test analysis (separate dataset, Python)
+7. Models and tests in dbt
+
+## Data limitations
+- `add_shipping_info` is almost identical to `begin_checkout` (11,105 vs 11,106 sessions), so it is excluded from the funnel.
+- `traffic_source` is first-touch: it shows how a user first arrived, not the source of the current session.
+- `(data deleted)` and `<Other>` are obfuscation artifacts of the sample dataset, not real channels, so no conclusions are drawn from them.
+- A session is defined as `user_pseudo_id` + `ga_session_id`.
 
 ## Dashboards
 - Looker Studio: [link]
@@ -28,18 +44,27 @@ GA4 events from November 2020 to January 2021
 ## Tech stack
 BigQuery SQL, dbt, Looker Studio, Tableau, Python
 
+## How to reproduce
+1. Create a Google Cloud project and open BigQuery Sandbox (no billing needed).
+2. Run `sql/00_copy_raw_data.sql`, replacing `YOUR_PROJECT_ID` with your project ID.
+3. Run the other queries in `sql/` in order. Replace the project ID in table names the same way.
+
 ## Repository structure
-ecommerce-funnel-analysis/
+```
+ga4-ecommerce-analytics/
 ├── README.md
 ├── sql/
+│   ├── 00_copy_raw_data.sql
 │   ├── 01_events_and_params.sql
 │   ├── 02_sessions_and_users.sql
 │   ├── 03_funnel.sql
-│   ├── 04_cohort_retention.sql
-│   └── 05_channel_performance.sql
-├── dbt/              (появится на неделе 6)
+│   ├── 03b_funnel_non_strict.sql
+│   ├── 04_channel_performance.sql
+│   └── 05_cohort_retention.sql      (planned)
+├── dbt/                             (planned)
 ├── notebooks/
-│   └── ab_test_analysis.ipynb
+│   └── ab_test_analysis.ipynb       (planned)
 ├── docs/
-│   └── ga4_events_to_metrics.md
-└── images/  
+│   └── ga4_events_to_metrics.md     (planned)
+└── images/
+```
