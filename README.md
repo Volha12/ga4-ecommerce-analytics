@@ -12,6 +12,7 @@ Google Merchandise Store sample dataset (`bigquery-public-data.ga4_obfuscated_sa
 1. **The biggest loss is at the top of the funnel.** Only about 22% of sessions reach a product page, and only about 20% of those add an item to the cart. Overall, 1.4% of sessions end in a purchase (4,848 of 354,857).
 2. **Referral traffic is the most valuable identifiable channel.** It converts at 1.66% (vs 1.10% for organic) and brings $1.31 revenue per session. Organic is the largest source of revenue (about 29%), but converts below average. Paid search (cpc) has the lowest average order value ($59 vs $74-79 for other channels) on a small traffic base (4% of sessions).
 3. **Strict and non-strict funnels differ a lot.** 47% of sessions with `begin_checkout` have no `add_to_cart` in the same session, so a strict funnel understates conversion (2,816 purchasing sessions vs 4,848).
+4. **Retention is low and drops fast.** Only about 4-6% of new users come back in the week after their first visit, and about 2-3% in the second week. After that the curve flattens at 0.2-0.5%, so repeat engagement is mostly decided in the first two weeks.
 
 ## Funnel (non-strict, each step counted independently)
 | Step | Sessions | % of sessions |
@@ -36,6 +37,8 @@ Google Merchandise Store sample dataset (`bigquery-public-data.ga4_obfuscated_sa
 - `traffic_source` is first-touch: it shows how a user first arrived, not the source of the current session.
 - `(data deleted)` and `<Other>` are obfuscation artifacts of the sample dataset, not real channels, so no conclusions are drawn from them.
 - A session is defined as `user_pseudo_id` + `ga_session_id`.
+- Retention counts any event in a week, not only purchases
+- Later cohorts have fewer observed weeks because the data ends on 2021-01-31
 
 ## Dashboards
 - Looker Studio: [link]
