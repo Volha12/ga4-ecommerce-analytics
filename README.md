@@ -41,7 +41,7 @@ Google Merchandise Store sample dataset (`bigquery-public-data.ga4_obfuscated_sa
 - Later cohorts have fewer observed weeks because the data ends on 2021-01-31
 
 ## Dashboards
-- Looker Studio: [link]
+- Looker Studio: (https://datastudio.google.com/reporting/e7449b5e-1de6-4884-9d20-b5847801e66e)
 - Tableau Public: [link]
 
 ## Tech stack
