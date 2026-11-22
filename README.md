@@ -74,7 +74,7 @@ ga4-ecommerce-analytics/
 │   ├── 01_funnel.png
 │   ├── 02_channels.png
 │   ├── 03_retention.png
-└── data/
+└── data/ (query results used by the dashboards)
 │   ├── ga4_channels.csv
 │   ├── ga4_funnel.csv
 │   ├── ga4_retention.csv
