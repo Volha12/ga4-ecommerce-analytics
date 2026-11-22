@@ -60,7 +60,7 @@ ga4-ecommerce-analytics/
 │   ├── 03_funnel.sql
 │   ├── 03b_funnel_non_strict.sql
 │   ├── 04_channel_performance.sql
-│   └── 05_cohort_retention.sql      (planned)
+│   └── 05_cohort_retention.sql      
 ├── dbt/                             (planned)
 ├── notebooks/
 │   └── ab_test_analysis.ipynb       (planned)
