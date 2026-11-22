@@ -71,4 +71,11 @@ ga4-ecommerce-analytics/
 ├── docs/
 │   └── ga4_events_to_metrics.md     (planned)
 └── images/
+│   ├── 01_funnel.png
+│   ├── 02_channels.png
+│   ├── 03_retention.png
+└── data/
+│   ├── ga4_channels.csv
+│   ├── ga4_funnel.csv
+│   ├── ga4_retention.csv
 ```
